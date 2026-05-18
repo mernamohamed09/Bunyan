@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import styles from "./Sidebar.module.css";
 
-function Sidebar({ drafts }) {
+function Sidebar({ drafts = {} })  {
 
   const links = [
     { icon: "fa-chart-line", title: "Status", path: "/" },

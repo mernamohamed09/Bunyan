@@ -1,116 +1,64 @@
-  import { Routes, Route } from "react-router-dom";
-  import { useState } from "react";
+import { Routes, Route } from "react-router-dom";
+import { useState } from "react";
+import Footer from "../../components/Dashborad/Footer/Footer";
+import Navbar from "../../components/Dashborad/Navbar/Navbar";
+import Sidebar from "../../components/Dashborad/Sidebar/Sidebar";
+import StatusPage from "./StatusPage";
+import Users from "./Users";
+import Projects from "./Projects";
+import Developers from "./Developers";
+import TableDashboard from "../../components/Ui/TableDasboard/TableDasboard";
+import FormDashboard from "../../components/Ui/FormDashboard/FormDashboard";
 
-  import Footer from "../../components/Dashborad/Footer/Footer";
-  import Navbar from "../../components/Dashborad/Navbar/Navbar";
-  import Sidebar from "../../components/Dashborad/Sidebar/Sidebar";
+function Dashboard() {
 
-  import StatusPage from "./StatusPage";
-  import Users from "./Users";
-  import Projects from "./Projects";
-  import Developers from "./Developers";
+  const [drafts, setDrafts] = useState({
+    users: false,
+    projects: false,
+    developers: false,
+  });
 
-  import TableDashboard from "../../components/Ui/TableDasboard/TableDasboard";
-  import FormDashboard from "../../components/Ui/FormDashboard/FormDashboard";
+  return (
+    <>
+      <Navbar adminName="mohamed" />
+      <div className="d-flex">
+        <Sidebar drafts={drafts} />
+        <main className="flex-grow-1">
 
-  function Dashboard() {
+          <Routes>
 
-    const [drafts, setDrafts] = useState({
-      users: false,
-      projects: false,
-      developers: false,
-    });
+            <Route path="/" element={<StatusPage />} />
 
-    return (
-      <>
-        <Navbar adminName="mohamed" />
 
-        <div className="d-flex">
+            <Route path="/Users" element={<Users />}>
+              <Route index element={<TableDashboard header="Users" title="Add New User" />} />
 
-          <Sidebar drafts={drafts} />
+              <Route path="add" element={<FormDashboard setDrafts={setDrafts} type="users" />} />
+            </Route>
 
-          <main className="flex-grow-1">
 
-            <Routes>
+            <Route path="/Projects" element={<Projects />}>
+              <Route index element={<TableDashboard header="Projects" title="Add New Project" />} />
 
-              <Route path="/" element={<StatusPage />} />
+              <Route path="add" element={<FormDashboard setDrafts={setDrafts} type="projects" />} />
+            </Route>
 
-              {/* USERS */}
-              <Route path="/Users" element={<Users />}>
-                <Route
-                  index
-                  element={
-                    <TableDashboard
-                      header="Users"
-                      title="Add New User"
-                    />
-                  }
-                />
 
-                <Route path="add" element={
-                    <FormDashboard
-                      setDrafts={setDrafts}
-                      type="users"
-                    />
-                  }
-                />
-              </Route>
+            <Route path="/Developers" element={<Developers />}>
+              <Route index element={<TableDashboard header="Developers" title="Add New Developer" />} />
 
-              {/* PROJECTS */}
-              <Route path="/Projects" element={<Projects />}>
-                <Route
-                  index
-                  element={
-                    <TableDashboard
-                      header="Projects"
-                      title="Add New Project"
-                    />
-                  }
-                />
+              <Route path="add" element={<FormDashboard setDrafts={setDrafts} type="developers" />} />
+            </Route>
 
-                <Route
-                  path="add"
-                  element={
-                    <FormDashboard
-                      setDrafts={setDrafts}
-                      type="projects"
-                    />
-                  }
-                />
-              </Route>
+          </Routes>
 
-              {/* DEVELOPERS */}
-              <Route path="/developers" element={<Developers />}>
-                <Route
-                  index
-                  element={
-                    <TableDashboard
-                      header="Developers"
-                      title="Add New Developer"
-                    />
-                  }
-                />
+        </main>
 
-                <Route
-                  path="add"
-                  element={
-                    <FormDashboard
-                      setDrafts={setDrafts}
-                      type="developers"
-                    />
-                  }
-                />
-              </Route>
+      </div>
 
-            </Routes>
+      <Footer />
+    </>
+  );
+}
 
-          </main>
-
-        </div>
-
-        <Footer />
-      </>
-    );
-  }
-
-  export default Dashboard;
+export default Dashboard;
